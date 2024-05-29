@@ -3,19 +3,19 @@ package graph;
 import java.util.Date;
 
 public class Message {
-    public final char[] data;
+    public final byte[] data;
     public final String asText;
     public final double asDouble;
     public final Date date;
 
     public Message(String message) {
         this.asText = message;
-        this.data = message.toCharArray();
+        this.data = message.getBytes();
         this.asDouble = toDouble(message);
         this.date = new Date();
     }
 
-    public Message(char[] message) {
+    public Message(byte[] message) {
         this(new String(message));
     }
 
