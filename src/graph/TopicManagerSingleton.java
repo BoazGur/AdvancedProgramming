@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class TopicManagerSingleton {
-    static class TopicManager {
+    public static class TopicManager {
         private static final TopicManager instance;
         private ConcurrentHashMap<String, Topic> nameTopicMap;
 

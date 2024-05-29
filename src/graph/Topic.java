@@ -14,6 +14,14 @@ public class Topic {
         this.pubs = new HashSet<Agent>();
     }
 
+    public Set<Agent> getSubs() {
+        return new HashSet<Agent>(subs);
+    }
+
+    public Set<Agent> getPubs() {
+        return new HashSet<Agent>(pubs);
+    }
+
     public void subscribe(Agent agent) {
         subs.add(agent);
     }
