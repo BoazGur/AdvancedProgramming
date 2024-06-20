@@ -1,6 +1,5 @@
 package configs;
 
-import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -17,7 +16,7 @@ public class GenericConfig implements Config {
     private final int capacity = 50;
 
     public GenericConfig() {
-        agents = new ArrayList<>(); 
+        agents = new ArrayList<>();
     }
 
     public void setConfFile(String confFile) {
@@ -29,16 +28,20 @@ public class GenericConfig implements Config {
         try {
             List<String> lines = Files.readAllLines(Paths.get(confFile));
 
-            if (lines.size() % 3 == 0) return;
+            if (lines.size() % 3 != 0) return;
 
             for (int i = 0; i < lines.size(); i += 3) {
-                Constructor<?> constractor = Class.forName(lines.get(i)).getClass().getConstructor();
-                Class<?>[] parameterTypes = constractor.getParameterTypes();
-                
+                String[] subs = lines.get(i + 1).split(",");
+                String[] pubs = lines.get(i + 2).split(",");
 
-                Agent agent = new ParallelAgent(, capacity);
+                Class<?> _class = Class.forName(lines.get(i));
+                Constructor<?> constructor = _class.getConstructor(subs.getClass(), pubs.getClass());
+                Agent agent = (Agent) constructor.newInstance(subs, pubs);
+
+                Agent parallelAgent = new ParallelAgent(agent, capacity);
+                agents.add(parallelAgent);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -59,5 +62,5 @@ public class GenericConfig implements Config {
             agent.close();
         }
     }
-    
+
 }
