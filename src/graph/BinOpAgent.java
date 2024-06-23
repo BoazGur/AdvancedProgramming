@@ -57,7 +57,7 @@ public class BinOpAgent implements Agent {
         if (topic.equals(topicInput2))
             numInput2 = msgNum; // if the topic matches the second input
         
-        if (Double.isNaN(numInput1) | Double.isNaN(numInput2)) return; // if there is a number not initialized
+        if (Double.isNaN(numInput1) || Double.isNaN(numInput2)) return; // if there is a number not initialized
 
         Message output = new Message(operator.apply(numInput1, numInput2));
         topicManager.getTopic(topicOutput).publish(output);
